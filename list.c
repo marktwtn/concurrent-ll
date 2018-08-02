@@ -1,3 +1,5 @@
+#include "list.h"
+
 node_t *node_delete(int val) {
     node_t *prev, *current;
     prev = &ListHead;
@@ -27,7 +29,7 @@ int node_insert(int val, int target) {
     while ((current = prev->link)) {
         pthread_mutex_lock(&current->lock);
         if (current->val == target) {
-            node_t *newNode;
+            node_t *newNode = malloc(sizeof(node_t));
             newNode->val = val;
             newNode->link = current->link;
             current->link = newNode;
