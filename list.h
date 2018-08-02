@@ -1,3 +1,6 @@
+#ifndef LIST_H
+#define LIST_H
+
 #include <pthread.h>
 
 typedef struct node {
@@ -10,3 +13,5 @@ node_t ListHead = { .val = 0 };
 
 node_t *node_delete(int val);
 int node_insert(int val, int target);
+
+#endif
