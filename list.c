@@ -1,3 +1,5 @@
+#include <stdlib.h>
+
 #include "list.h"
 
 node_t *node_delete(int val) {
