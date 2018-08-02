@@ -9,8 +9,6 @@ typedef struct node {
     pthread_mutex_t lock;
 } node_t;
 
-node_t ListHead = { .val = 0 };
-
 node_t *node_delete(int val);
 int node_insert(int val, int target);
 

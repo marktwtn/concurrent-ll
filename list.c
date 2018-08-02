@@ -2,6 +2,8 @@
 
 #include "list.h"
 
+node_t ListHead = { .val = 0 };
+
 node_t *node_delete(int val) {
     node_t *prev, *current;
     prev = &ListHead;
