@@ -26,15 +26,16 @@ node_t *node_delete(int val) {
 }
 
 int node_insert(int val, int target) {
-    node_t *prev, *current;
-    prev = &ListHead;
+    node_t *prev, *current, *newNode;
+    prev    = &ListHead;
+    newNode = malloc(sizeof(node_t));
+    newNode->val = val;
 
     pthread_mutex_lock(&prev->lock);
     while ((current = prev->link)) {
         pthread_mutex_lock(&current->lock);
-        if (current->val == target) {
-            node_t *newNode = malloc(sizeof(node_t));
-            newNode->val = val;
+        // find the target value and insert the node after it
+	if (current->val == target) {
             newNode->link = current->link;
             current->link = newNode;
             pthread_mutex_unlock(&current->lock);
@@ -44,6 +45,9 @@ int node_insert(int val, int target) {
         pthread_mutex_unlock(&prev->lock);
         prev = current;
     }
+    // does not find the target value and insert the node at the end of the list
+    newNode->link = NULL;
+    prev->link    = newNode;
     pthread_mutex_unlock(&prev->lock);
-    return (-1);
+    return 0;
 }
