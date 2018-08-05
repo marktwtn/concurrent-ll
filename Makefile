@@ -1,8 +1,9 @@
 thread?=2
+range?=10
 
 .PHONY: all
 all: main.c list.c list.h
-	gcc -DTHREAD_NUM=$(thread) main.c list.c -lpthread
+	gcc -DTHREAD_NUM=$(thread) -DRANDOM_RANGE=$(range) main.c list.c -lpthread
 
 run: all
 	./a.out

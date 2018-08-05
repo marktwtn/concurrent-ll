@@ -1,14 +1,23 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
 #include "list.h"
 
 #ifndef THREAD_NUM
 #define THREAD_NUM 2
 #endif
+#ifndef RANDOM_RANGE
+#define RANDOM_RANGE 10
+#endif
 
 extern node_t ListHead;
 
 void *child(void *arg) {
+    srand(time(NULL));
+    for(int i=0; i<10; i++) {
+        node_insert(rand()%RANDOM_RANGE + 1 ,0);
+    }
     pthread_exit(NULL);
 }
 
