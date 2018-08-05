@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/time.h>
 #include <time.h>
 
 #include "list.h"
@@ -23,7 +24,10 @@ void *child(void *arg) {
 
 int main(void) {
     pthread_t thr[THREAD_NUM];
+    struct timeval start, end;
+    int duration;
 
+    gettimeofday(&start, NULL);
     for(int i=0; i<THREAD_NUM; i++) {
         pthread_create(&thr[i], NULL, child, NULL);
     }
@@ -31,6 +35,10 @@ int main(void) {
     for(int i=0; i<THREAD_NUM; i++) {
         pthread_join(thr[i], NULL);
     }
+    gettimeofday(&end, NULL);
+
+    duration = (end.tv_sec * 1000000 + end.tv_usec) -
+               (start.tv_sec * 1000000 + start.tv_usec);
 
     // print the singly-linked list
     node_t *current;
@@ -43,6 +51,8 @@ int main(void) {
     while(current = current->link) {
         printf("Node %d: val=%d\n", index++, current->val);
     }
+    // thread execution time
+    printf("Duration: %d (us)\n", duration);
 
     return 0;
 }
