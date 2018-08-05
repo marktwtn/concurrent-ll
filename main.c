@@ -1,6 +1,8 @@
 #include "list.h"
 
+#ifndef THREAD_NUM
 #define THREAD_NUM 2
+#endif
 
 void *child(void *arg) {
     pthread_exit(NULL);
