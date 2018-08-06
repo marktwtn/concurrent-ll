@@ -16,13 +16,23 @@ extern node_t ListHead;
 
 void *child(void *arg) {
     srand(time(NULL));
+    int randV, randT;
     for(int i=0; i<10; i++) {
         if(rand()%2) {
             node_t *ret;
-            ret = node_delete(rand()%RANDOM_RANGE + 1);
-	    free(ret);
+            randV = rand()%RANDOM_RANGE + 1;
+            ret = node_delete(randV);
+            free(ret);
+            #ifdef DEBUG
+            printf("Delete node with %d val.\n", randV);
+            #endif
 	} else {
-            node_insert(rand()%RANDOM_RANGE + 1 ,0);
+            randV = rand()%RANDOM_RANGE + 1;
+            randT = rand()%(RANDOM_RANGE+1);
+            node_insert(randV, randT);
+            #ifdef DEBUG
+            printf("Insert node with %d val after node %d.\n", randV, randT);
+            #endif
 	}
     }
     pthread_exit(NULL);
