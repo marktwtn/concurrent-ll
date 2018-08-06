@@ -17,7 +17,13 @@ extern node_t ListHead;
 void *child(void *arg) {
     srand(time(NULL));
     for(int i=0; i<10; i++) {
-        node_insert(rand()%RANDOM_RANGE + 1 ,0);
+        if(rand()%2) {
+            node_t *ret;
+            ret = node_delete(rand()%RANDOM_RANGE + 1);
+	    free(ret);
+	} else {
+            node_insert(rand()%RANDOM_RANGE + 1 ,0);
+	}
     }
     pthread_exit(NULL);
 }
