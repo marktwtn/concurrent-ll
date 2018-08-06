@@ -59,7 +59,7 @@ int main(void) {
     duration = (end.tv_sec * 1000000 + end.tv_usec) -
                (start.tv_sec * 1000000 + start.tv_usec);
 
-    // print the singly-linked list
+    // print the result
     node_t *current;
     current = &ListHead;
     int index=0;
@@ -70,8 +70,10 @@ int main(void) {
     while(current = current->link) {
         printf("Node %d: val=%d\n", index++, current->val);
     }
-    // thread execution time
+    printf("Thread total number: %d\n", THREAD_NUM);
     printf("Duration: %d (us)\n", duration);
+    printf("Value range: 1 ~ %d\n", RANDOM_RANGE);
+    printf("Operation execution per thread: %d \n", EXE_TIMES);
 
     return 0;
 }
