@@ -11,13 +11,16 @@
 #ifndef RANDOM_RANGE
 #define RANDOM_RANGE 10
 #endif
+#ifndef EXE_TIMES
+#define EXE_TIMES 10
+#endif
 
 extern node_t ListHead;
 
 void *child(void *arg) {
     srand(time(NULL));
     int randV, randT;
-    for(int i=0; i<10; i++) {
+    for(int i=0; i<EXE_TIMES; i++) {
         if(rand()%2) {
             node_t *ret;
             randV = rand()%RANDOM_RANGE + 1;
