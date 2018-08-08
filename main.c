@@ -30,7 +30,11 @@ void *child(void *arg) {
                 #ifdef DEBUG
                 printf("Delete node with %d val.\n", randV);
                 #endif
-            }
+            } else {
+                #ifdef DEBUG
+                printf("Delete node with %d val. (FAILED)\n", randV);
+                #endif
+	    }
 	} else {
             randV = rand()%RANDOM_RANGE + 1;
             randT = rand()%(RANDOM_RANGE+1);
@@ -38,7 +42,11 @@ void *child(void *arg) {
                 #ifdef DEBUG
                 printf("Insert node with %d val after node %d.\n", randV, randT);
                 #endif
-            }
+            } else {
+                #ifdef DEBUG
+                printf("Insert node with %d val after node %d. (FAILED)\n", randV, randT);
+                #endif
+	    }
 	}
     }
     pthread_exit(NULL);
