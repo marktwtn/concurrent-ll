@@ -9,7 +9,7 @@ all: main.c list.c list.h
 run: all
 	./a.out
 
-debug:
+debug: main.c list.c list.h
 	gcc -DDEBUG -DEXE_TIMES=$(times) -DTHREAD_NUM=$(thread) -DRANDOM_RANGE=$(range) main.c list.c -lpthread
 	./a.out
 
