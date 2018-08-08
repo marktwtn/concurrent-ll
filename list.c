@@ -35,6 +35,8 @@ int node_insert(int val, int target) {
     node_t *prev, *current, *newNode;
     int getlock; // 0 : acquire lock successfully
     prev = &ListHead;
+    newNode = malloc(sizeof(node_t));
+    newNode->val = val;
 
     pthread_mutex_lock(&prev->lock);
     while ((current = prev->link)) {
@@ -46,8 +48,6 @@ int node_insert(int val, int target) {
         }
         // find the target value and insert the node after it
 	if (current->val == target) {
-            newNode = malloc(sizeof(node_t));
-            newNode->val = val;
             newNode->link = current->link;
             current->link = newNode;
             pthread_mutex_unlock(&current->lock);
