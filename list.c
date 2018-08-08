@@ -6,11 +6,17 @@ node_t ListHead = { .val = 0 };
 
 node_t *node_delete(int val) {
     node_t *prev, *current;
+    int getlock; // 0 : acquire lock successfully
     prev = &ListHead;
 
     pthread_mutex_lock(&prev->lock);
     while ((current = prev->link)) {
-        pthread_mutex_lock(&current->lock);
+        pthread_mutex_trylock(&current->lock);
+        // unable to get the lock
+        if (getlock != 0) {
+            pthread_mutex_unlock(&prev->lock);
+            return NULL;
+        }
         if (current->val == val) {
             prev->link = current->link;
             current->link = NULL;
@@ -27,15 +33,21 @@ node_t *node_delete(int val) {
 
 int node_insert(int val, int target) {
     node_t *prev, *current, *newNode;
-    prev    = &ListHead;
-    newNode = malloc(sizeof(node_t));
-    newNode->val = val;
+    int getlock; // 0 : acquire lock successfully
+    prev = &ListHead;
 
     pthread_mutex_lock(&prev->lock);
     while ((current = prev->link)) {
-        pthread_mutex_lock(&current->lock);
+        getlock = pthread_mutex_trylock(&current->lock);
+        // unable to get the lock
+        if (getlock != 0) {
+            pthread_mutex_unlock(&prev->lock);
+            return -1;
+        }
         // find the target value and insert the node after it
 	if (current->val == target) {
+            newNode = malloc(sizeof(node_t));
+            newNode->val = val;
             newNode->link = current->link;
             current->link = newNode;
             pthread_mutex_unlock(&current->lock);

@@ -20,22 +20,25 @@ extern node_t ListHead;
 void *child(void *arg) {
     srand(time(NULL));
     int randV, randT;
+    node_t *ret;
     for(int i=0; i<EXE_TIMES; i++) {
         if(rand()%2) {
-            node_t *ret;
             randV = rand()%RANDOM_RANGE + 1;
             ret = node_delete(randV);
-            free(ret);
-            #ifdef DEBUG
-            printf("Delete node with %d val.\n", randV);
-            #endif
+            if (ret) {
+                free(ret);
+                #ifdef DEBUG
+                printf("Delete node with %d val.\n", randV);
+                #endif
+            }
 	} else {
             randV = rand()%RANDOM_RANGE + 1;
             randT = rand()%(RANDOM_RANGE+1);
-            node_insert(randV, randT);
-            #ifdef DEBUG
-            printf("Insert node with %d val after node %d.\n", randV, randT);
-            #endif
+            if (!node_insert(randV, randT)) {
+                #ifdef DEBUG
+                printf("Insert node with %d val after node %d.\n", randV, randT);
+                #endif
+            }
 	}
     }
     pthread_exit(NULL);
